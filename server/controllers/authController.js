@@ -11,8 +11,8 @@ const signUp = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already registered" });
-    const hashPassword = await bcrypt.hash(password, 10);
-    const user = new User(username, email, hashPassword);
+
+    const user = new User({ username, email, password });
     await user.save();
 
     return res.status(200).json({ message: "User added succesfully" });
@@ -28,7 +28,10 @@ const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
-    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("Stored password ", user.password);
+    console.log("Raw password", password);
+    const isMatch = await bcrypt.compare(password.trim(), user.password);
+    console.log("Is match", isMatch);
     if (!isMatch)
       return res.status(400).json({ message: "Password is incorrect" });
 
