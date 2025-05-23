@@ -64,7 +64,7 @@ const getBookById = async (req, res) => {
     const averageRating =
       (await Review.aggregate([
         { $match: { book: book._id } },
-        { $group: { _id: null, avgRating: { $avg: $rating } } },
+        { $group: { _id: null, avgRating: { $avg: "$rating" } } },
       ])[0]?.avgRating) || 0;
 
     res.json({ book, Average_Rating: averageRating.toFixed(2), reviews });

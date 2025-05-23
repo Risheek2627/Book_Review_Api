@@ -1,15 +1,14 @@
 const mongoose = require("mongoose");
-const { useDeferredValue } = require("react");
 
 const reviewSchema = new mongoose.Schema({
   book: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: Book,
+    ref: "Book",
     required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: useDeferredValue,
+    ref: "User",
     required: true,
   },
   rating: {

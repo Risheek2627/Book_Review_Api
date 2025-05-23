@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const User = require();
+const User = require("../models/userModel");
 
 dotenv.config();
 
 const verifyToken = async (req, res, next) => {
-  const token = req.headers["authorization"]?.replace("Bearer", "");
+  const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     return res.status(404).json({ message: "Token is required" });
   }
