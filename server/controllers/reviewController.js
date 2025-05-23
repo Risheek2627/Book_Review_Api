@@ -5,18 +5,15 @@ const Book = require("../models/bookModel");
 
 const addReview = async (req, res) => {
   try {
-    const { bookId } = req.params;
+    const { id } = req.params;
     const { rating, comment } = req.body;
 
     const userId = req.user.id;
 
-    const book = await Book.findById(bookId);
+    const book = await Book.findById(id);
     if (!book) return res.status(404).json({ message: "Book not found" });
 
-    const existReview = await Review.findOne(
-      { user: userId },
-      { book: bookId }
-    );
+    const existReview = await Review.findOne({ user: userId, book: id });
     if (existReview) {
       return res
         .status(400)
@@ -24,13 +21,14 @@ const addReview = async (req, res) => {
     }
 
     const review = new Review({
-      book: bookId,
+      book: id,
       user: userId,
       rating: Number(rating),
       comment,
     });
 
     await review.save();
+    res.status(200).json({ message: "Review added", review });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error.message });

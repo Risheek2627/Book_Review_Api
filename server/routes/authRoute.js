@@ -1,10 +1,22 @@
 const express = require("express");
 const routes = express.Router();
+const handleValidationError = require("../validate/handelValidation");
+const { registerValidation, loginValidation } = require("../validate/validate");
 
 const userController = require("../controllers/authController");
 
-routes.post("/signup", userController.signUp);
+routes.post(
+  "/signup",
+  registerValidation,
+  handleValidationError,
+  userController.signUp
+);
 
-routes.post("/login", userController.login);
+routes.post(
+  "/login",
+  loginValidation,
+  handleValidationError,
+  userController.login
+);
 
 module.exports = routes;

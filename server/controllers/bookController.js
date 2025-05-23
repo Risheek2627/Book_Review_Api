@@ -61,12 +61,14 @@ const getBookById = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
-    const averageRating =
-      (await Review.aggregate([
-        { $match: { book: book._id } },
-        { $group: { _id: null, avgRating: { $avg: "$rating" } } },
-      ])[0]?.avgRating) || 0;
+    const avgResult = await Review.aggregate([
+      { $match: { book: book._id } },
+      { $group: { _id: null, avgRating: { $avg: "$rating" } } },
+    ]);
 
+    const averageRating = avgResult[0]?.avgRating || 0;
+
+    console.log("Average_Rating : ", averageRating);
     res.json({ book, Average_Rating: averageRating.toFixed(2), reviews });
   } catch (error) {
     res.status(500).json({ error: error.message });

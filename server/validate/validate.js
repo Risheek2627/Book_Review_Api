@@ -9,8 +9,18 @@ const registerValidation = [
 ];
 
 const loginValidation = [
-  bodybody("email").isEmail().withMessage("Email is required"),
+  body("email").isEmail().withMessage("Email is required"),
   body("password").notEmpty().withMessage("Password is required"),
 ];
 
-module.exports = { registerValidation, loginValidation };
+const bookEntry = [
+  body("title").notEmpty().withMessage("Title is required"),
+  body("author").notEmpty().withMessage("Author name is required"),
+  body("genre").notEmpty().withMessage("Genre is required"),
+];
+
+module.exports = {
+  registerValidation,
+  loginValidation,
+  bookEntry,
+};

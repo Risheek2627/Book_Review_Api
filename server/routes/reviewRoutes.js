@@ -7,10 +7,10 @@ const {
   deleteReview,
 } = require("../controllers/reviewController");
 
-routes.post("/books/:id/reviews", verifyToken, addReview);
+routes.post("/books/:id/reviews", verifyToken, addReview); // Book Id
 
-routes.put("/reviews/:id", updateReview);
+routes.put("/reviews/:id", verifyToken, updateReview);
 
-routes.delete("/reviews/:id", deleteReview);
+routes.delete("/reviews/:id", verifyToken, deleteReview);
 
 module.exports = routes;
