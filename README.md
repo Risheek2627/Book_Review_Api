@@ -22,6 +22,7 @@ A RESTful API built with Node.js, Express, and MongoDB that allows users to sign
 - `GET /books/:id` – Get book details, including:
   - Average rating
   - Reviews with pagination
+- `GET /search`  - Search books by title or author
 
 ### ✅ Review Management
 - `POST /books/:id/reviews` – Submit a review (1 review per user per book)
