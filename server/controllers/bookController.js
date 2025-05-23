@@ -73,4 +73,20 @@ const getBookById = async (req, res) => {
   }
 };
 
-module.exports = { addBook, getAllBooks, getBookById };
+const search = async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    const regex = new RegExp(q, "i");
+
+    const books = await Book.find({
+      $or: [{ title: regex }, { author: regex }],
+    });
+
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { addBook, getAllBooks, getBookById, search };
